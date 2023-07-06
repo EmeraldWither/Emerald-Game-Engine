@@ -1,0 +1,32 @@
+package org.emeraldcraft.engine.api.settings;
+
+public class GameSettingsBuilder {
+    private int tickTime = 25;
+    private boolean isFullScreen = true;
+    private int windowSizeX = 1920 / 2;
+    private int windowSizeY = 1080 / 2;
+
+    public GameSettingsBuilder setTickTime(int tickTime) {
+        this.tickTime = tickTime;
+        return this;
+    }
+
+    public GameSettingsBuilder setIsFullScreen(boolean isFullScreen) {
+        this.isFullScreen = isFullScreen;
+        return this;
+    }
+
+    public GameSettingsBuilder setWindowSizeX(int windowSizeX) {
+        this.windowSizeX = windowSizeX;
+        return this;
+    }
+
+    public GameSettingsBuilder setWindowSizeY(int windowSizeY) {
+        this.windowSizeY = windowSizeY;
+        return this;
+    }
+
+    public GameSettings getSettings() {
+        return new GameSettings(tickTime, isFullScreen, windowSizeX, windowSizeY);
+    }
+}
