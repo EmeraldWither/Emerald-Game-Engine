@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Thing extends AdvancedPhysicsGameObject {
     public Thing() {
-        super("Hello There", new Rectangle(100, 100), 1);
+        super("Hello There", new Rectangle(2, 2), 1);
         setImageAsset(new ImageAsset("box.png"));
     }
 

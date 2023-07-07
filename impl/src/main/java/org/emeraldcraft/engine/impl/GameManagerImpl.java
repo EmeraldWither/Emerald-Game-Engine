@@ -90,6 +90,9 @@ public class GameManagerImpl implements GameManager {
                     }
                 }
             }
+            Logger.log("Shutting down main thread.");
+            System.exit(0);
+
             //and start it immediately
         }).start();
         renderer.start();

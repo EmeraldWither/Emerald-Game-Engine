@@ -7,6 +7,8 @@ import org.emeraldcraft.engine.api.utils.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 public class RenderManager extends JComponent {
@@ -42,6 +44,21 @@ public class RenderManager extends JComponent {
         gameFrame.setResizable(false);
         gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         gameFrame.setVisible(true);
+        gameFrame.addWindowListener(new WindowListener() {
+            public void windowOpened(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {}
+
+
+            public void windowClosed(WindowEvent e) {
+                //end the game
+                game.endThread();
+            }
+
+            public void windowIconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) {}
+        });
     }
 
     public void paintGame(Graphics g) {
