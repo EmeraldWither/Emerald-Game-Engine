@@ -48,7 +48,6 @@ public class RenderManager extends JComponent {
             public void windowOpened(WindowEvent e) {}
             public void windowClosing(WindowEvent e) {}
 
-
             public void windowClosed(WindowEvent e) {
                 //end the game
                 game.endThread();

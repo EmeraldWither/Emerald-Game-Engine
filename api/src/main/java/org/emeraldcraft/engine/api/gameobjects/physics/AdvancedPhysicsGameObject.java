@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import org.dyn4j.dynamics.Body;
 import org.dyn4j.geometry.Geometry;
 import org.dyn4j.geometry.MassType;
+import org.dyn4j.geometry.Vector2;
 import org.dyn4j.world.World;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.internal.GameInstance;
@@ -11,8 +12,12 @@ import org.emeraldcraft.engine.api.internal.GameInstance;
 import java.awt.*;
 
 public abstract class AdvancedPhysicsGameObject extends GameObject {
-    private final Body body;
+    protected final Body body;
+    private final int gravityScaling = GameInstance.getGame().getSettings().getGravityMeterScaling();
     private Image image;
+    private int deltaX;
+    private int deltaY;
+
 
     /**
      * @param name           The name of the gameobject
@@ -22,42 +27,51 @@ public abstract class AdvancedPhysicsGameObject extends GameObject {
     public AdvancedPhysicsGameObject(String name, Rectangle hitbox, int renderPriority) {
         super(name, hitbox, renderPriority);
         World<Body> world = GameInstance.getGameManager().getPhysicsWorld();
+
+        // Create some objects
+//        org.dyn4j.geometry.Rectangle floor = Geometry.createRectangle(10.0, 1.0);
+//        floor.translate(0.0, -15.0);
+//        Body floorBody = new Body();
+//        floorBody.addFixture(floor);
+//        floorBody.setMass(MassType.INFINITE);
+
+        org.dyn4j.geometry.Rectangle box = Geometry.createRectangle(10, 10);
         this.body = new Body();
-        org.dyn4j.geometry.Rectangle rec = Geometry.createRectangle(hitbox.width, hitbox.height);
-        this.body.addFixture(rec);
-        this.body.setEnabled(true);
-        this.body.rotate(Math.toRadians(45));
-        this.body.setMass(MassType.NORMAL);
-
-
-        Rectangle floorRect = new Rectangle(15, 1);
-        Body floor = new Body();
-        floor.addFixture(Geometry.createRectangle(floorRect.width, floorRect.height));
-        floor.setMass(MassType.INFINITE);
-        // move the floor down a bit
-        floor.translate(0.0, -4.0);
-
-        world.addBody(floor);
+        body.setMass(MassType.NORMAL);
+        body.addFixture(box);
+        //world.addBody(floorBody);
         world.addBody(body);
+        body.setEnabled(true);
+        body.setGravityScale(15);
+        body.applyForce(new Vector2(5, 5));
     }
-    public void tickPhysics(){
-        getLocation().x += body.getChangeInPosition().x;
-        getLocation().y += body.getChangeInPosition().y;
-        getLocation().rotationRadians += body.getChangeInOrientation();
+
+    public void tickPhysics() {
+        getLocation().x += body.getChangeInPosition().x * gravityScaling;
+        getLocation().y -= body.getChangeInPosition().y * gravityScaling;
+        getLocation().rotationRadians = body.getChangeInOrientation();
     }
 
     @SneakyThrows
     @Override
     public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
         if (this.image == null && imageAsset != null) {
             this.image = imageAsset.getImage();
         }
-        if(this.image == null) return;
-        g2d.rotate(getLocation().rotationRadians);
+        if (this.image == null) return;
 
-        g2d.drawImage(image, getLocation().x, getLocation().y, null);
-        g2d.drawString("X: " + getLocation().x + " Y: " + getLocation().y + "Rotation Radians: " + getLocation().rotationRadians, 30, 30);
-        g2d.drawString("X Change in Pos: " + body.getChangeInPosition().x + " Y Change in Pos: " + body.getChangeInPosition().y + "Rotation Change in Radians: " + body.getChangeInOrientation(), 30, 50);
+        Vector2 position = body.getWorldPoint(((org.dyn4j.geometry.Polygon) body.getFixture(0).getShape()).getVertices()[0]);
+        double x = position.x;
+        double y = position.y;
+
+        g.drawString("X: " + x + " Y: " + y, 30, 70);
+
+        // Render the body with rotation
+        g.setColor(Color.BLUE);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.translate(x, y);
+        //g2d.rotate(-angle);
+        g2d.fillRect(0, 100, 100, 100);
+        g2d.dispose();
     }
 }

@@ -6,6 +6,8 @@ public class GameSettingsBuilder {
     private int windowSizeX = 1920 / 2;
     private int windowSizeY = 1080 / 2;
 
+    private int gravityMeterScaling = 19;
+
     public GameSettingsBuilder setTickTime(int tickTime) {
         this.tickTime = tickTime;
         return this;
@@ -26,7 +28,11 @@ public class GameSettingsBuilder {
         return this;
     }
 
+    public void setGravityMeterScaling(int gravityMeterScaling) {
+        this.gravityMeterScaling = gravityMeterScaling;
+    }
+
     public GameSettings getSettings() {
-        return new GameSettings(tickTime, isFullScreen, windowSizeX, windowSizeY);
+        return new GameSettings(tickTime, isFullScreen, windowSizeX, windowSizeY, gravityMeterScaling);
     }
 }

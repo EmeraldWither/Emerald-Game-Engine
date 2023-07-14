@@ -6,12 +6,14 @@ public class GameSettings {
     private final boolean isFullScreen;
     private final int windowSizeX;
     private final int windowSizeY;
+    private final int gravityMeterScaling;
 
-    public GameSettings(int tickTime, boolean isFullScreen, int windowSizeX, int windowSizeY) {
+    public GameSettings(int tickTime, boolean isFullScreen, int windowSizeX, int windowSizeY, int gravityMeterScaling) {
         this.tickTime = tickTime;
         this.isFullScreen = isFullScreen;
         this.windowSizeX = windowSizeX;
         this.windowSizeY = windowSizeY;
+        this.gravityMeterScaling = gravityMeterScaling;
     }
 
     public int getTickTime() {
@@ -28,6 +30,10 @@ public class GameSettings {
 
     public int getWindowSizeY() {
         return windowSizeY;
+    }
+
+    public int getGravityMeterScaling() {
+        return gravityMeterScaling;
     }
 
     @Override
