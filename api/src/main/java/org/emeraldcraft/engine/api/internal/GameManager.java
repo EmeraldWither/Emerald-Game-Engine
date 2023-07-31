@@ -1,7 +1,5 @@
 package org.emeraldcraft.engine.api.internal;
 
-import org.dyn4j.dynamics.Body;
-import org.dyn4j.world.World;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.settings.GameSettings;
 
@@ -26,5 +24,4 @@ public interface GameManager {
 
     void deRegisterGameObject(GameObject gameObject);
 
-    World<Body> getPhysicsWorld();
 }
