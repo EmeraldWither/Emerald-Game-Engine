@@ -80,6 +80,8 @@ public class RenderManager extends JComponent {
             }
             g.setColor(Color.black);
         }
+        //Linux
+        Toolkit.getDefaultToolkit().sync();
     }
 
     /**

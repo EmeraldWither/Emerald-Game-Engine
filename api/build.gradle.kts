@@ -11,8 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.dyn4j:dyn4j:4.2.0")
-
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
 
