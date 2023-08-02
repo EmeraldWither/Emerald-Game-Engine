@@ -1,8 +1,10 @@
 package org.emeraldcraft.engine.impl;
 
+import javafx.scene.input.KeyCode;
 import lombok.Getter;
 import org.emeraldcraft.engine.api.Game;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
+import org.emeraldcraft.engine.api.input.Controllable;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.GameSettings;
@@ -10,6 +12,7 @@ import org.emeraldcraft.engine.api.utils.Logger;
 import org.emeraldcraft.engine.impl.rendering.RenderManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameManagerImpl implements GameManager {
     private Game game;
@@ -28,7 +31,8 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public void startThread() {
-        if(GameInstance.getGame() == null) throw new IllegalStateException("Main game instance has not been created yet.");
+        if (GameInstance.getGame() == null)
+            throw new IllegalStateException("Main game instance has not been created yet.");
         this.game = GameInstance.getGame();
 
         Logger.log("Starting main thread with the following settings: \n" + game.getSettings());
@@ -43,6 +47,8 @@ public class GameManagerImpl implements GameManager {
             while (isRunning) {
                 lastTickTime = System.currentTimeMillis();
 
+                renderer.processKeyInput();
+
                 for (GameObject gameObject : addObjectsQueue) {
                     //add any game objects that needed to be added
                     if (gameObject.getRenderPriority() >= gameObjects.size()) gameObjects.add(gameObject);
@@ -54,6 +60,11 @@ public class GameManagerImpl implements GameManager {
                 //tick everything
                 for (GameObject gameObject : gameObjects) {
                     gameObject.tick();
+                    if (gameObject instanceof Controllable) {
+                        List<KeyCode> keys = renderer.getKeyInputListener();
+                        if(!keys.isEmpty())
+                            ((Controllable) gameObject).onKeyboardInput(renderer.getKeyInputListener());
+                    }
                     if (gameObject.shouldRemove()) gameObject.remove();
                 }
                 //Run after tick
@@ -95,11 +106,12 @@ public class GameManagerImpl implements GameManager {
 
 
     @Override
-    public GameSettings getSettings(){
+    public GameSettings getSettings() {
         return this.game.getSettings();
     }
+
     @Override
-    public String getName(){
+    public String getName() {
         return this.game.getName();
     }
 

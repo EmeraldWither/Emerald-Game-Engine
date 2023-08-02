@@ -30,6 +30,6 @@ public class BasicMovingBox extends GameObject {
     @Override
     public void tick() {
         getLocation().x++;
-        getLocation().y = 100;
+        getLocation().y = 50;
     }
 }

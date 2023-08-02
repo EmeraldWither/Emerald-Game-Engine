@@ -29,12 +29,12 @@ public class BasicRenderer implements Renderer {
 
     @Override
     public void drawCircle(int x, int y, int radius) {
-        g2d.drawOval(x, y, radius, radius);
+        g2d.drawOval(x, y, radius * 2, radius * 2);
     }
 
     @Override
     public void drawCircleFilled(int x, int y, int radius) {
-        g2d.fillOval(x, y, radius, radius);
+        g2d.fillOval(x, y, radius * 2 , radius * 2);
     }
 
     @Override

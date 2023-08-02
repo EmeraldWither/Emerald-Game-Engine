@@ -11,6 +11,7 @@ public class ExampleGame extends Game {
     @Override
     public void init() {
         new BasicMovingBox();
+        new ControllableCircle();
     }
 
     @Override

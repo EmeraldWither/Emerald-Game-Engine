@@ -1,20 +1,25 @@
 package org.emeraldcraft.engine.impl.rendering;
 
-import org.emeraldcraft.engine.api.internal.GameManager;
+import javafx.scene.input.KeyCode;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
+import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.DebugSettings;
 import org.emeraldcraft.engine.api.utils.Logger;
+import org.emeraldcraft.engine.impl.input.KeyInputListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RenderManager extends JComponent {
     private final GameManager game;
 
     private BasicRenderer basicRenderer;
+
+    private KeyInputListener keyInputListener = new KeyInputListener();
 
     private boolean isRunning = false;
     private JFrame gameFrame;
@@ -61,11 +66,12 @@ public class RenderManager extends JComponent {
             public void windowActivated(WindowEvent e) {}
             public void windowDeactivated(WindowEvent e) {}
         });
+        gameFrame.addKeyListener(keyInputListener);
     }
 
     public void paintGame(Graphics g) {
         if(basicRenderer == null) basicRenderer = new BasicRenderer(((Graphics2D) g));
-        else basicRenderer.updateGraphicsObject(((Graphics2D) g));
+        basicRenderer.updateGraphicsObject(((Graphics2D) g));
 
         ArrayList<GameObject> gameObjects = game.getGameObjects();
         //backwards loop so important items are painted last (first)
@@ -87,6 +93,7 @@ public class RenderManager extends JComponent {
             }
             basicRenderer.reset();
         }
+
         //Linux
         Toolkit.getDefaultToolkit().sync();
     }
@@ -103,8 +110,16 @@ public class RenderManager extends JComponent {
         new Thread(() ->
         {
             while (isRunning) {
+                //handle key inputs
                 repaint();
             }
         }).start();
+    }
+    public void processKeyInput(){
+        keyInputListener.poll();
+    }
+
+    public List<KeyCode> getKeyInputListener() {
+        return keyInputListener.getCurrentKeys();
     }
 }
