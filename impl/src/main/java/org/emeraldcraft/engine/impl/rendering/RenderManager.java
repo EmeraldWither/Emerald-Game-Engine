@@ -1,4 +1,4 @@
-package org.emeraldcraft.engine.impl;
+package org.emeraldcraft.engine.impl.rendering;
 
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class RenderManager extends JComponent {
     private final GameManager game;
+
+    private BasicRenderer basicRenderer;
+
     private boolean isRunning = false;
     private JFrame gameFrame;
 
@@ -61,12 +64,16 @@ public class RenderManager extends JComponent {
     }
 
     public void paintGame(Graphics g) {
+        if(basicRenderer == null) basicRenderer = new BasicRenderer(((Graphics2D) g));
+        else basicRenderer.updateGraphicsObject(((Graphics2D) g));
+
         ArrayList<GameObject> gameObjects = game.getGameObjects();
         //backwards loop so important items are painted last (first)
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             GameObject gameObject = gameObjects.get(i);
             gameObject.render(g);
 
+            gameObject.onDraw(basicRenderer);
             //see if we have to render hitboxes
             if (DebugSettings.SHOW_HITBOXES) {
                 ((Graphics2D) g).setStroke(new BasicStroke(5));
@@ -78,7 +85,7 @@ public class RenderManager extends JComponent {
                 g.drawString("\"" + gameObject.getName() + "\"", gameObject.getLocation().x, gameObject.getLocation().y - 10);
                 ((Graphics2D) g).setStroke(new BasicStroke(1));
             }
-            g.setColor(Color.black);
+            basicRenderer.reset();
         }
         //Linux
         Toolkit.getDefaultToolkit().sync();

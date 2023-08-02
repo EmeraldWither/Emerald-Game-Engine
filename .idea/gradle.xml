@@ -14,10 +14,11 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/examples/example-game" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/example/example-game" />
+        <option name="gradleHome" value="" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/examples/example-game" />
+            <option value="$PROJECT_DIR$/example/example-game" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,6 +1,8 @@
 plugins {
     id("java-library")
-    `maven-publish`
+    id("maven-publish")
+    id("idea")
+    id("eclipse")
 }
 
 group = "org.emeraldcraft"
@@ -8,6 +10,19 @@ version = "v0.1"
 
 repositories {
     mavenCentral()
+    mavenLocal()
+}
+idea {
+    module {
+        isDownloadSources = true
+        isDownloadJavadoc = true
+    }
+}
+eclipse {
+    classpath {
+        isDownloadSources = true
+        isDownloadJavadoc = true
+    }
 }
 
 dependencies {
@@ -23,8 +38,10 @@ publishing {
             groupId = "org.emeraldcraft.engine"
             artifactId = "api"
             version = "0.1"
-
             from(components["java"])
         }
     }
+}
+tasks.jar {
+    from(sourceSets["main"].allSource)
 }

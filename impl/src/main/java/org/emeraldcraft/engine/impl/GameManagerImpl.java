@@ -1,15 +1,13 @@
 package org.emeraldcraft.engine.impl;
 
 import lombok.Getter;
-import org.dyn4j.dynamics.Body;
-import org.dyn4j.world.World;
 import org.emeraldcraft.engine.api.Game;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.GameSettings;
 import org.emeraldcraft.engine.api.utils.Logger;
-import org.emeraldcraft.engine.impl.physics.PhysicsEngine;
+import org.emeraldcraft.engine.impl.rendering.RenderManager;
 
 import java.util.ArrayList;
 
@@ -28,9 +26,6 @@ public class GameManagerImpl implements GameManager {
     @Getter
     private final ArrayList<GameObject> addObjectsQueue = new ArrayList<>();
 
-    private PhysicsEngine physicsEngine;
-
-
     @Override
     public void startThread() {
         if(GameInstance.getGame() == null) throw new IllegalStateException("Main game instance has not been created yet.");
@@ -38,9 +33,6 @@ public class GameManagerImpl implements GameManager {
 
         Logger.log("Starting main thread with the following settings: \n" + game.getSettings());
         //Physics engine setup
-        physicsEngine = new PhysicsEngine();
-        physicsEngine.setupEngine();
-
         game.init();
         renderer = new RenderManager(this);
         isRunning = true;
@@ -50,8 +42,6 @@ public class GameManagerImpl implements GameManager {
 
             while (isRunning) {
                 lastTickTime = System.currentTimeMillis();
-
-                physicsEngine.tick();
 
                 for (GameObject gameObject : addObjectsQueue) {
                     //add any game objects that needed to be added
@@ -121,10 +111,5 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void deRegisterGameObject(GameObject gameObject) {
         this.removeObjectsQueue.add(gameObject);
-    }
-
-    @Override
-    public World<Body> getPhysicsWorld() {
-        return this.physicsEngine.getWorld();
     }
 }
