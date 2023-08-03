@@ -1,12 +1,13 @@
 package org.emeraldcraft.examples;
 
-import javafx.scene.input.KeyCode;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.Controllable;
+import org.emeraldcraft.engine.api.input.KeyCode;
 import org.emeraldcraft.engine.api.render.Renderer;
 
 import java.awt.*;
 import java.util.List;
+
 
 public class ControllableCircle extends GameObject implements Controllable {
     public ControllableCircle() {

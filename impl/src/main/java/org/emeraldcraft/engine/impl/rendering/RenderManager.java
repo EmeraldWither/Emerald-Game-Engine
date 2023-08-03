@@ -1,7 +1,7 @@
 package org.emeraldcraft.engine.impl.rendering;
 
-import javafx.scene.input.KeyCode;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
+import org.emeraldcraft.engine.api.input.KeyCode;
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.DebugSettings;
 import org.emeraldcraft.engine.api.utils.Logger;

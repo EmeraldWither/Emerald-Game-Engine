@@ -1,10 +1,10 @@
 package org.emeraldcraft.engine.impl;
 
-import javafx.scene.input.KeyCode;
 import lombok.Getter;
 import org.emeraldcraft.engine.api.Game;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.Controllable;
+import org.emeraldcraft.engine.api.input.KeyCode;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.GameSettings;

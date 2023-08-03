@@ -1,6 +1,6 @@
 package org.emeraldcraft.engine.impl.input;
 
-import javafx.scene.input.KeyCode;
+import org.emeraldcraft.engine.api.input.KeyCode;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
