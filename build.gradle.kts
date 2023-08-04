@@ -43,3 +43,17 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.28")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
 }
+tasks.jar {
+    dependsOn(mergedJar)
+
+    from({
+        mergedJar
+                .filter {
+                    it.name.endsWith("jar") && it.path.contains(rootDir.path)
+                }
+                .map {
+                    logger.lifecycle("depending on $it")
+                    zipTree(it)
+                }
+    })
+}

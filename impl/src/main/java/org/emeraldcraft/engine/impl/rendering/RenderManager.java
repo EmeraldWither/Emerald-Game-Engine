@@ -19,7 +19,7 @@ public class RenderManager extends JComponent {
 
     private BasicRenderer basicRenderer;
 
-    private KeyInputListener keyInputListener = new KeyInputListener();
+    private final KeyInputListener keyInputListener = new KeyInputListener();
 
     private boolean isRunning = false;
     private JFrame gameFrame;
@@ -44,8 +44,9 @@ public class RenderManager extends JComponent {
         gameFrame.setName(game.getName());
         //load screen dimensions based on the game settings
         if (game.getSettings().isFullScreen()) {
-            gameFrame.setUndecorated(true);
             gameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            gameFrame.setUndecorated(true);
+            gameFrame.setVisible(true);
         } else {
             gameFrame.setSize(game.getSettings().getWindowSizeX(), game.getSettings().getWindowSizeY());
         }

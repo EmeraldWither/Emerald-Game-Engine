@@ -10,6 +10,7 @@ import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.GameSettings;
 import org.emeraldcraft.engine.api.utils.Logger;
 import org.emeraldcraft.engine.impl.rendering.RenderManager;
+import org.emeraldcraft.engine.impl.scheduler.TaskExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,9 @@ public class GameManagerImpl implements GameManager {
     @Getter
     private RenderManager renderer;
     private boolean isRunning;
+
+    @Getter
+    private final TaskExecutor taskExecutor = new TaskExecutor();
 
     @Getter
     private final ArrayList<GameObject> gameObjects = new ArrayList<>();
@@ -67,6 +71,9 @@ public class GameManagerImpl implements GameManager {
                     }
                     if (gameObject.shouldRemove()) gameObject.remove();
                 }
+                //run our game tasks
+                taskExecutor.executeTasks();
+
                 //Run after tick
                 game.onTick();
 

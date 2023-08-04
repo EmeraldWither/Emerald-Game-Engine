@@ -12,6 +12,8 @@ repositories {
 dependencies {
     implementation("org.emeraldcraft.engine:api:0.1")
     runtimeOnly("org.emeraldcraft.engine:engine:0.1")
+
+    compileOnly("org.jetbrains:annotations:24.0.1")
 }
 application {
     mainClass.set("org.emeraldcraft.examples.main")
