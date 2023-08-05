@@ -63,12 +63,12 @@ public class GameManagerImpl implements GameManager {
 
                 //tick everything
                 for (GameObject gameObject : gameObjects) {
-                    gameObject.tick();
                     if (gameObject instanceof Controllable) {
                         List<KeyCode> keys = renderer.getKeyInputListener();
                         if(!keys.isEmpty())
                             ((Controllable) gameObject).onKeyboardInput(renderer.getKeyInputListener());
                     }
+                    gameObject.tick();
                     if (gameObject.shouldRemove()) gameObject.remove();
                 }
                 //run our game tasks
