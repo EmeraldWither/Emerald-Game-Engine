@@ -12,30 +12,4 @@ This project is mainly a personal project, and is designed to be used by student
 * Automatic rendering
 * Multi-threaded
 
-## Building using Gradle
-
-This project uses Gradle to handle the building of the code. This project is not on any maven repo, so manually adding it to your local repository will be needed
-
-After cloning this repo, run `gradlew publishToMavenLocal`.
-
-Then, include the following in your projects `build.gradle.kts`
-```kotlin
-plugins {  
-	id("application")  
-}  
-repositories {  
-	mavenCentral()  
-	mavenLocal()  
-}  
-  
-dependencies {  
-	implementation("org.emeraldcraft.engine:api:0.1")  
-	runtimeOnly("org.emeraldcraft.engine:engine:0.1")  
-}  
-application {  
-	mainClass.set(MAIN CLASS)  
-}
-```
-
-
-Checkout the `example-game` module for an example game which implements physics.
+To get started, check out the [Project Setup page](https://github.com/EmeraldWither/Emerald-Game-Engine/wiki/1.-Project-Setup) on the wiki.
