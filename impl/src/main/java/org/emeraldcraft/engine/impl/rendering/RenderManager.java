@@ -73,6 +73,7 @@ public class RenderManager extends JComponent {
     public void paintGame(Graphics g) {
         if(basicRenderer == null) basicRenderer = new BasicRenderer(((Graphics2D) g));
         basicRenderer.updateGraphicsObject(((Graphics2D) g));
+        basicRenderer.reset();
 
         ArrayList<GameObject> gameObjects = game.getGameObjects();
         //backwards loop so important items are painted last (first)

@@ -4,6 +4,7 @@ import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.scheduler.TaskScheduler;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,20 @@ public class EmeraldGameEngine {
     /**
      * @return A copy of the list of all the registered gameobjects.
      */
-    public List<GameObject> getGameObjects(){
+    public static List<GameObject> getGameObjects(){
         return new ArrayList<>(GameInstance.getGameManager().getGameObjects());
+    }
+
+    public static <U extends GameObject> List<GameObject> getGameObjectsByType(Class<U> type){
+        ArrayList<GameObject> gameObjects = new ArrayList<>();
+        for (GameObject gameObject : GameInstance.getGameManager().getGameObjects()) {
+            if(type.isInstance(gameObject)){
+                gameObjects.add(gameObject);
+            }
+        }
+        return gameObjects;
+    }
+    public static Dimension getScreenSize(){
+        return Toolkit.getDefaultToolkit().getScreenSize();
     }
 }

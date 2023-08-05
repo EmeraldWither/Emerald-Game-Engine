@@ -37,7 +37,8 @@ public class HitBox {
 
 
     private void updateLocation(HitBox hitbox) {
-        r.setLocation(hitbox.gameObject.getLocation().x, hitbox.gameObject.getLocation().y);
+        this.r.setLocation(gameObject.getLocation().x, gameObject.getLocation().y);
+        hitbox.r.setLocation(hitbox.gameObject.getLocation().x, hitbox.gameObject.getLocation().y);
     }
     private void updateLocation(int x, int y) {
         r.setLocation(x, y);
