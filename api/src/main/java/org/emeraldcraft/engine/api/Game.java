@@ -6,9 +6,9 @@ import org.emeraldcraft.engine.api.settings.GameSettings;
 import org.emeraldcraft.engine.api.settings.GameSettingsBuilder;
 import org.emeraldcraft.engine.api.utils.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Represents a Game.
+ */
 public abstract class Game {
     @Getter
     private final String name;
@@ -39,6 +39,9 @@ public abstract class Game {
      */
     public abstract void onTick();
 
+    /**
+     * Should only be called once.
+     */
     public void startGame(){
         Logger.log("Starting " + name + " v" + version);
         GameInstance.getGameManager().startThread();

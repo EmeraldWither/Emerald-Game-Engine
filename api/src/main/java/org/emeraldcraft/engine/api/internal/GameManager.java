@@ -6,6 +6,10 @@ import org.emeraldcraft.engine.api.settings.GameSettings;
 
 import java.util.ArrayList;
 
+/**
+ * Internal.
+ * NOT API
+ */
 public interface GameManager {
     void startThread();
 

@@ -1,5 +1,8 @@
 package org.emeraldcraft.engine.api.settings;
 
+/**
+ * Helper class to make create gamesettings easier.
+ */
 public class GameSettingsBuilder {
     private int tickTime = 25;
     private boolean isFullScreen = true;

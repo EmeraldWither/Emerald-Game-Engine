@@ -7,6 +7,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Represents an Asset that is an image.
+ */
 public class ImageAsset extends Asset {
     @Getter
     private final Image image;

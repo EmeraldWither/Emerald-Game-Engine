@@ -1,7 +1,6 @@
 package org.emeraldcraft.engine.api.gameobjects;
 
 import lombok.Getter;
-import org.emeraldcraft.engine.api.HitBox;
 
 public class Location {
     @Getter

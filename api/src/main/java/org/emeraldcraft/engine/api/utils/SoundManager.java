@@ -10,6 +10,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
+/**
+ * Allows sound to be played.
+ */
 public class SoundManager {
     /**
      * Easy method which handles exception handling

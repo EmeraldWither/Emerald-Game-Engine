@@ -2,6 +2,9 @@ package org.emeraldcraft.engine.api.render;
 
 import java.awt.*;
 
+/**
+ * The renderer which will do the drawing to the screen.
+ */
 public interface Renderer {
 
     /**

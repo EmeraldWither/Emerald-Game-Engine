@@ -1,6 +1,4 @@
-package org.emeraldcraft.engine.api;
-
-import org.emeraldcraft.engine.api.gameobjects.GameObject;
+package org.emeraldcraft.engine.api.gameobjects;
 
 import java.awt.*;
 

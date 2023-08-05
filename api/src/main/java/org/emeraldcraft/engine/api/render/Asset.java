@@ -4,6 +4,9 @@ import lombok.Getter;
 
 import java.io.File;
 
+/**
+ * Represents a Game Asset/
+ */
 public class Asset {
     @Getter
     private final File asset;

@@ -1,7 +1,6 @@
 package org.emeraldcraft.engine.api.gameobjects;
 
 import lombok.Getter;
-import org.emeraldcraft.engine.api.HitBox;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.render.ImageAsset;
 import org.emeraldcraft.engine.api.render.Renderer;
@@ -9,6 +8,10 @@ import org.emeraldcraft.engine.api.utils.Logger;
 
 import java.awt.*;
 
+/**
+ * Represents a basic gameobject.
+ * Should be inherited.
+ */
 public abstract class GameObject {
     @Getter
     private final String name;

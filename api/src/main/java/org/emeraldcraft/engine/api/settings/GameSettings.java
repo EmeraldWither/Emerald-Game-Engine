@@ -1,5 +1,8 @@
 package org.emeraldcraft.engine.api.settings;
 
+/**
+ * The settings for the game.
+ */
 public class GameSettings {
 
     private final int tickTime;
