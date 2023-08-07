@@ -1,5 +1,6 @@
 package org.emeraldcraft.engine.impl.rendering;
 
+import org.emeraldcraft.engine.api.render.ImageAsset;
 import org.emeraldcraft.engine.api.render.Renderer;
 
 import java.awt.*;
@@ -45,6 +46,26 @@ public class BasicRenderer implements Renderer {
     @Override
     public void setThickness(int thickness) {
         g2d.setStroke(new BasicStroke(thickness));
+    }
+
+    @Override
+    public void translate(int x, int y) {
+        g2d.translate(x, y);
+    }
+
+    @Override
+    public void rotateDegrees(double angle) {
+        g2d.rotate(Math.toRadians(angle));
+    }
+
+    @Override
+    public void drawString(String text, int x, int y) {
+        g2d.drawString(text, x, y);
+    }
+
+    @Override
+    public void drawImage(ImageAsset imageAsset, int x, int y) {
+        g2d.drawImage(imageAsset.getImage(), x, y, null);
     }
 
     @Override
