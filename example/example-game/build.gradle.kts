@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.emeraldcraft.engine:api:0.1")
-    runtimeOnly("org.emeraldcraft.engine:engine:0.1")
+    implementation("org.emeraldcraft.engine:api:0.2")
+    runtimeOnly("org.emeraldcraft.engine:engine:0.2")
 
     compileOnly("org.jetbrains:annotations:24.0.1")
 }

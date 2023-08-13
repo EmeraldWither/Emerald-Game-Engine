@@ -14,6 +14,7 @@ import java.util.TimeZone;
 /**
  * Features a more advanced logging functionality
  */
+//TODO Replace sysout calls with own actual logger
 public class Logger {
     public static void log(String msg) {
         //get the class that called our method
@@ -22,8 +23,7 @@ public class Logger {
         String className = element.getClassName();
         //remove package and add .java at the end
         String name = className.split("\\.")[className.split("\\.").length - 1] + ".java";
-
-        System.out.println("(" + name + ":" + element.getLineNumber() + ") [" + getCurrentTime() + "]: " + msg);
+        System.out.println(name + ":" + element.getLineNumber() + ") [" + getCurrentTime() + "]: " + msg);
     }
 
     public static void warn(String msg) {
@@ -33,8 +33,7 @@ public class Logger {
         String className = element.getClassName();
         //remove package
         String name = className.split("\\.")[className.split("\\.").length - 1] + ".java";
-
-        System.out.println("<!> (" + name + ":" + element.getLineNumber() + ") [WARNING " + getCurrentTime() + "]: " + msg + "<!>");
+        System.out.println("(" + name + ":" + element.getLineNumber() + ") [WARNING " + getCurrentTime() + "]: " + msg);
     }
 
     private static String getCurrentTime() {

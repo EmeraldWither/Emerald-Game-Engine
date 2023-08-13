@@ -8,13 +8,15 @@ public class DelayedGameTask extends GameTask {
     private final Runnable runnable;
 
     private final int delay;
+    private final boolean internal;
 
     private int ticks = 0;
     private boolean finished = false;
 
-    public DelayedGameTask(Runnable runnable, int delay) {
+    public DelayedGameTask(Runnable runnable, int delay, boolean internal) {
         this.runnable = runnable;
         this.delay = delay;
+        this.internal = internal;
     }
 
     /**
@@ -33,5 +35,16 @@ public class DelayedGameTask extends GameTask {
     @Override
     public boolean isFinished() {
         return finished;
+    }
+
+    @Override
+    public String toString() {
+        if(internal) return "InternalGameTask (Not USER)";
+        return "DelayedGameTask{" +
+                "delay=" + delay +
+                ", finished=" + finished +
+                ", cancelled=" + cancelled +
+                ", running=" + running +
+                '}';
     }
 }
