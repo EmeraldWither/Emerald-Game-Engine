@@ -74,6 +74,6 @@ public class CommandGUIFrame extends JFrame {
         return commandField;
     }
     public void appendLogs(String text) {
-        consoleText.append(text + "\n");
+        consoleText.append(text + "\n ");
     }
 }
