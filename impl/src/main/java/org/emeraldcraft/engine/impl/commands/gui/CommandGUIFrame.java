@@ -24,8 +24,7 @@ public class CommandGUIFrame extends JFrame {
         mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        consoleText = getLogWindow();
-        mainPanel.add(consoleText);
+        mainPanel.add(getLogWindow());
 
         JTextField commandField = getCommandField();
         mainPanel.add(commandField, BorderLayout.SOUTH);
@@ -33,20 +32,18 @@ public class CommandGUIFrame extends JFrame {
         this.add(mainPanel);
     }
 
-    @NotNull
-    private JTextArea getLogWindow() {
-        JTextArea consoleText = new JTextArea();
-        consoleText.setOpaque(false);
+    private JScrollPane getLogWindow() {
+        consoleText = new JTextArea();
+        //consoleText.setOpaque(false);
 
         JScrollPane scrollPane = new JScrollPane(consoleText);
-        consoleText.setText("Hi\n HI!\n HI!!!!\n THis is a helo world btw");
         consoleText.setEditable(false);
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
+        scrollPane.setBackground(Color.white);
         consoleText.setFont(new Font("Consolas", Font.PLAIN, 12));
-        return consoleText;
+        return scrollPane;
     }
     @NotNull
     private JTextField getCommandField(){
@@ -60,7 +57,7 @@ public class CommandGUIFrame extends JFrame {
                     String command = commandField.getText();
                     commandField.setText("");
                     //process the command
-                    String baseCommand = command.split(" ")[0];;
+                    String baseCommand = command.split(" ")[0];
                     String[] args;
                     if (command.split(" ").length == 1) args = new String[0];
                     else args = command.substring(command.indexOf(" ") + 1).split(" ");
@@ -77,6 +74,6 @@ public class CommandGUIFrame extends JFrame {
         return commandField;
     }
     public void appendLogs(String text) {
-        consoleText.append(text);
+        consoleText.append(text + "\n");
     }
 }

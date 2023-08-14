@@ -51,7 +51,6 @@ public class RenderManager extends JComponent {
         }
         gameFrame.setResizable(false);
         gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        gameFrame.setVisible(true);
         gameFrame.addWindowListener(new WindowListener() {
             public void windowOpened(WindowEvent e) {}
             public void windowClosing(WindowEvent e) {}
@@ -68,6 +67,9 @@ public class RenderManager extends JComponent {
         });
         gameFrame.addKeyListener(keyInputListener);
         gameFrame.addKeyListener(new CommandGUIKeyListener(game.getCommandGUIManager()));
+        gameFrame.revalidate();
+        gameFrame.setVisible(true);
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public void paintGame(Graphics g) {

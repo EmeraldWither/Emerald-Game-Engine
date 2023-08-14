@@ -1,2 +1,8 @@
-package org.emeraldcraft.engine.api.internal;public class InternalEmeraldLogger {
+package org.emeraldcraft.engine.api.internal;
+
+/**
+ * NOT API
+ */
+public interface InternalEmeraldLogger {
+    void log(String s);
 }

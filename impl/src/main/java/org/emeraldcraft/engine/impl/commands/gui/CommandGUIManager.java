@@ -26,4 +26,8 @@ public class CommandGUIManager {
             showGUI();
         }
     }
+
+    public void log(String s) {
+        jFrame.appendLogs(s);
+    }
 }

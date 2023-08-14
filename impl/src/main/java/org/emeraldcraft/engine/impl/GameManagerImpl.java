@@ -43,6 +43,9 @@ public class GameManagerImpl implements GameManager {
     @Getter
     private final CommandGUIManager commandGUIManager = new CommandGUIManager();
 
+    @Getter
+    private final EmeraldLogger logger = new EmeraldLogger(commandGUIManager);
+
     public GameManagerImpl() {}
 
     @Override
@@ -109,7 +112,7 @@ public class GameManagerImpl implements GameManager {
                         Thread.sleep(game.getSettings().getTickTime() - timeElapsed);
                     } catch (InterruptedException e) {
                         Logger.warn("Failed to sleep the main thread. Crashing with stacktrace");
-                        e.printStackTrace();
+                        Logger.warn(e.getMessage());
                         System.exit(-1);
                     }
                 }
@@ -125,6 +128,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void endThread() {
         isRunning = false;
+        commandGUIManager.endGUI();
     }
 
 

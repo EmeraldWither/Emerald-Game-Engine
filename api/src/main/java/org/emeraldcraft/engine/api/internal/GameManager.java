@@ -33,4 +33,6 @@ public interface GameManager {
     TaskScheduler getTaskExecutor();
 
     CommandExecutor getCommandAPI();
+
+    InternalEmeraldLogger getLogger();
 }
