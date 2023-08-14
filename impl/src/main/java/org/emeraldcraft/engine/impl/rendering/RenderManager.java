@@ -1,10 +1,12 @@
 package org.emeraldcraft.engine.impl.rendering;
 
+import lombok.Getter;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.KeyCode;
-import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.DebugSettings;
 import org.emeraldcraft.engine.api.utils.Logger;
+import org.emeraldcraft.engine.impl.GameManagerImpl;
+import org.emeraldcraft.engine.impl.commands.gui.CommandGUIKeyListener;
 import org.emeraldcraft.engine.impl.input.KeyInputListener;
 
 import javax.swing.*;
@@ -15,23 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RenderManager extends JComponent {
-    private final GameManager game;
+    private final GameManagerImpl game;
 
     private BasicRenderer basicRenderer;
 
     private final KeyInputListener keyInputListener = new KeyInputListener();
 
     private boolean isRunning = false;
+    @Getter
     private JFrame gameFrame;
 
-    public RenderManager(GameManager game) {
+    public RenderManager(GameManagerImpl game) {
         this.game = game;
     }
 
-
-    public JFrame getGameFrame() {
-        return gameFrame;
-    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -52,7 +51,6 @@ public class RenderManager extends JComponent {
         }
         gameFrame.setResizable(false);
         gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        gameFrame.setVisible(true);
         gameFrame.addWindowListener(new WindowListener() {
             public void windowOpened(WindowEvent e) {}
             public void windowClosing(WindowEvent e) {}
@@ -68,6 +66,10 @@ public class RenderManager extends JComponent {
             public void windowDeactivated(WindowEvent e) {}
         });
         gameFrame.addKeyListener(keyInputListener);
+        gameFrame.addKeyListener(new CommandGUIKeyListener(game.getCommandGUIManager()));
+        gameFrame.revalidate();
+        gameFrame.setVisible(true);
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public void paintGame(Graphics g) {

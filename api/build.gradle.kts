@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.emeraldcraft"
-version = "v0.1"
+version = "v0.2"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "org.emeraldcraft.engine"
             artifactId = "api"
-            version = "0.1"
+            version = project.version.toString().replace("v", "")
             from(components["java"])
         }
     }

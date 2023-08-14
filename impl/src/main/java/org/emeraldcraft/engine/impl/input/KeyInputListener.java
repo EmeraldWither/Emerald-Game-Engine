@@ -4,8 +4,6 @@ import org.emeraldcraft.engine.api.input.KeyCode;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,26 +29,9 @@ public class KeyInputListener implements KeyListener {
     public List<KeyCode> getCurrentKeys() {
         List<KeyCode> keys = new ArrayList<>();
         for (int i = 0; i < 256; i++)
-            if (keyDown(i)) keys.add(fromInt(i));
+            if (keyDown(i)) keys.add(InputUtils.fromInt(i));
         return keys;
     }
-    public KeyCode fromInt(int key){
-        Field[] fields = java.awt.event.KeyEvent.class.getDeclaredFields();
-        for (Field f : fields) {
-            if (Modifier.isStatic(f.getModifiers())) {
-                f.setAccessible(true);
-                try {
-                    if(f.get(KeyEvent.class).equals(key)){
-                        return KeyCode.getKeyCode(f.getName().replace("VK_", ""));
-                    }
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        throw new IllegalArgumentException("Invalid key code: " + key);
-    }
-
 
 
     public synchronized void poll() {

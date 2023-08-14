@@ -2,6 +2,7 @@ package org.emeraldcraft.engine.impl;
 
 import lombok.Getter;
 import org.emeraldcraft.engine.api.Game;
+import org.emeraldcraft.engine.api.commands.CommandExecutor;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.Controllable;
 import org.emeraldcraft.engine.api.input.KeyCode;
@@ -9,6 +10,9 @@ import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.internal.GameManager;
 import org.emeraldcraft.engine.api.settings.GameSettings;
 import org.emeraldcraft.engine.api.utils.Logger;
+import org.emeraldcraft.engine.impl.commands.DefaultCommandListener;
+import org.emeraldcraft.engine.impl.commands.gui.CommandGUIManager;
+import org.emeraldcraft.engine.impl.commands.handler.EmeraldCommandExecutor;
 import org.emeraldcraft.engine.impl.rendering.RenderManager;
 import org.emeraldcraft.engine.impl.scheduler.TaskExecutor;
 
@@ -33,6 +37,17 @@ public class GameManagerImpl implements GameManager {
     @Getter
     private final ArrayList<GameObject> addObjectsQueue = new ArrayList<>();
 
+    //commands
+    private final EmeraldCommandExecutor commandExecutor =  new EmeraldCommandExecutor();
+    private final DefaultCommandListener defaultCommandListener = new DefaultCommandListener();
+    @Getter
+    private final CommandGUIManager commandGUIManager = new CommandGUIManager();
+
+    @Getter
+    private final EmeraldLogger logger = new EmeraldLogger(commandGUIManager);
+
+    public GameManagerImpl() {}
+
     @Override
     public void startThread() {
         if (GameInstance.getGame() == null)
@@ -42,6 +57,10 @@ public class GameManagerImpl implements GameManager {
         Logger.log("Starting main thread with the following settings: \n" + game.getSettings());
         //Physics engine setup
         game.init();
+        commandExecutor.start();
+        commandExecutor.registerCommand("hitboxes", defaultCommandListener);
+        commandExecutor.registerCommand("list", defaultCommandListener);
+        commandExecutor.registerCommand("help", defaultCommandListener);
         renderer = new RenderManager(this);
         isRunning = true;
         new Thread(() -> {
@@ -93,7 +112,7 @@ public class GameManagerImpl implements GameManager {
                         Thread.sleep(game.getSettings().getTickTime() - timeElapsed);
                     } catch (InterruptedException e) {
                         Logger.warn("Failed to sleep the main thread. Crashing with stacktrace");
-                        e.printStackTrace();
+                        Logger.warn(e.getMessage());
                         System.exit(-1);
                     }
                 }
@@ -109,6 +128,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void endThread() {
         isRunning = false;
+        commandGUIManager.endGUI();
     }
 
 
@@ -131,4 +151,10 @@ public class GameManagerImpl implements GameManager {
     public void deRegisterGameObject(GameObject gameObject) {
         this.removeObjectsQueue.add(gameObject);
     }
+
+    @Override
+    public CommandExecutor getCommandAPI() {
+        return commandExecutor;
+    }
+
 }
