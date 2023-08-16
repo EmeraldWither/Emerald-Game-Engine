@@ -38,6 +38,17 @@ publishing {
             from(components["java"])
         }
     }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/EmeraldWither/Emerald-Game-Engine")
+
+            credentials {
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
+            }
+        }
+    }
 }
 tasks.jar {
     from(sourceSets["main"].allSource)
