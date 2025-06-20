@@ -4,9 +4,11 @@ import org.emeraldcraft.engine.api.EmeraldGameEngine;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.Controllable;
 import org.emeraldcraft.engine.api.input.KeyCode;
+import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.render.Renderer;
 import org.emeraldcraft.engine.api.scheduler.Task;
 import org.emeraldcraft.engine.api.utils.Logger;
+import org.emeraldcraft.examples.customevents.CircleMoveEvent;
 
 import java.awt.*;
 import java.util.List;
@@ -15,8 +17,9 @@ import java.util.List;
 public class ControllableCircle extends GameObject implements Controllable {
     private final Task task;
 
+
     public ControllableCircle() {
-        super("Controllable Circle", new Rectangle(50, 50), 1);
+        super("Controllable Circle", new Rectangle(50, 50), 1, 0);
         task = EmeraldGameEngine.getTaskScheduler().scheduleRepeatingTask(
                 () -> Logger.log("Press \"C\" on your keyboard to cancel me!"),
                 40,
@@ -31,7 +34,7 @@ public class ControllableCircle extends GameObject implements Controllable {
 
     @Override
     public void onDraw(Renderer renderer) {
-        renderer.drawCircleFilled(getLocation().x, getLocation().y, 25);
+        renderer.drawCircleFilled((int) getLocation().x, (int) getLocation().y, 25);
     }
 
     @Override
@@ -49,5 +52,7 @@ public class ControllableCircle extends GameObject implements Controllable {
             getLocation().x += 10;
         if(keys.contains(KeyCode.C))
             task.cancel();
+
+        GameInstance.getGameManager().getEventsManager().dispatchEvent(new CircleMoveEvent(this));
     }
 }

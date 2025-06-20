@@ -31,8 +31,9 @@ public class GameSettingsBuilder {
         return this;
     }
 
-    public void setGravityMeterScaling(int gravityMeterScaling) {
+    public GameSettingsBuilder setGravityMeterScaling(int gravityMeterScaling) {
         this.gravityMeterScaling = gravityMeterScaling;
+        return this;
     }
 
     public GameSettings getSettings() {

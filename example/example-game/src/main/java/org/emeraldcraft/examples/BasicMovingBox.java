@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class BasicMovingBox extends GameObject {
     public BasicMovingBox() {
-        super("Basic Moving Box", new Rectangle(50, 100), 1);
+        super("Basic Moving Box", new Rectangle(50, 100), 1, 0);
 
     }
 
@@ -21,11 +21,11 @@ public class BasicMovingBox extends GameObject {
     public void onDraw(Renderer renderer) {
         //Draw a red rectangle
         renderer.setColor(Color.RED);
-        renderer.drawRectFilled(getLocation().x, getLocation().y, getHitBox().getWidth(), getHitBox().getWidth());
+        renderer.drawRectFilled((int) getLocation().x, (int) getLocation().y, getHitBox().getWidth(), getHitBox().getWidth());
 
         //and draw a circle on top of it
         renderer.setColor(Color.GREEN);
-        renderer.drawCircleFilled(getLocation().x + (25 - 25/2), getLocation().y - 25, 25);
+        renderer.drawCircleFilled((int) (getLocation().x + (25 - (double) 25 /2)), (int) (getLocation().y - 25), 25);
     }
 
     @Override

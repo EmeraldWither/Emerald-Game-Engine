@@ -90,9 +90,9 @@ public class RenderManager extends JComponent {
 
                 //render based on the hitbox and location of the gameobject
                 g.setColor(Color.BLUE);
-                g.drawRect(gameObject.getLocation().x, gameObject.getLocation().y, gameObject.getHitBox().getWidth(), gameObject.getHitBox().getHeight());
+                g.drawRect((int) gameObject.getLocation().x, (int) gameObject.getLocation().y, gameObject.getHitBox().getWidth(), gameObject.getHitBox().getHeight());
                 g.setFont(new Font("Arial", Font.BOLD, 24));
-                g.drawString("\"" + gameObject.getName() + "\"", gameObject.getLocation().x, gameObject.getLocation().y - 10);
+                g.drawString("\"" + gameObject.getName() + "\"", (int) gameObject.getLocation().x, (int) (gameObject.getLocation().y - 10));
                 ((Graphics2D) g).setStroke(new BasicStroke(1));
             }
             basicRenderer.reset();

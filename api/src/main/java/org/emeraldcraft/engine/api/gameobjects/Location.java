@@ -5,8 +5,8 @@ import lombok.Getter;
 public class Location {
     @Getter
     private final HitBox hitbox;
-    public int x = 0;
-    public int y = 0;
+    public double x = 0;
+    public double y = 0;
 
     public double rotationRadians = 0;
 

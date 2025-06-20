@@ -1,6 +1,7 @@
 package org.emeraldcraft.engine.api;
 
 import org.emeraldcraft.engine.api.commands.CommandExecutor;
+import org.emeraldcraft.engine.api.event.EventsManager;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.internal.GameInstance;
 import org.emeraldcraft.engine.api.scheduler.TaskScheduler;
@@ -40,5 +41,9 @@ public class EmeraldGameEngine {
 
     public static Dimension getScreenSize(){
         return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+
+    public static EventsManager getEventsManager() {
+        return GameInstance.getGameManager().getEventsManager();
     }
 }

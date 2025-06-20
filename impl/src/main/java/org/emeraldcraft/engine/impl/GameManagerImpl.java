@@ -3,6 +3,7 @@ package org.emeraldcraft.engine.impl;
 import lombok.Getter;
 import org.emeraldcraft.engine.api.Game;
 import org.emeraldcraft.engine.api.commands.CommandExecutor;
+import org.emeraldcraft.engine.api.event.EventsManager;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.input.Controllable;
 import org.emeraldcraft.engine.api.input.KeyCode;
@@ -13,6 +14,7 @@ import org.emeraldcraft.engine.api.utils.Logger;
 import org.emeraldcraft.engine.impl.commands.DefaultCommandListener;
 import org.emeraldcraft.engine.impl.commands.gui.CommandGUIManager;
 import org.emeraldcraft.engine.impl.commands.handler.EmeraldCommandExecutor;
+import org.emeraldcraft.engine.impl.event.EmerqldEventsManager;
 import org.emeraldcraft.engine.impl.rendering.RenderManager;
 import org.emeraldcraft.engine.impl.scheduler.TaskExecutor;
 
@@ -44,7 +46,12 @@ public class GameManagerImpl implements GameManager {
     private final CommandGUIManager commandGUIManager = new CommandGUIManager();
 
     @Getter
+    private final EmerqldEventsManager emerqldEventsManager = new EmerqldEventsManager();
+
+    @Getter
     private final EmeraldLogger logger = new EmeraldLogger(commandGUIManager);
+
+    private long lastTickTime = 0L;
 
     public GameManagerImpl() {}
 
@@ -88,6 +95,7 @@ public class GameManagerImpl implements GameManager {
                             ((Controllable) gameObject).onKeyboardInput(renderer.getKeyInputListener());
                     }
                     gameObject.tick();
+                    gameObject.getModifiers().forEach(objectModifier -> objectModifier.onTick(gameObject));
                     if (gameObject.shouldRemove()) gameObject.remove();
                 }
                 //run our game tasks
@@ -102,14 +110,14 @@ public class GameManagerImpl implements GameManager {
 
 
                 //Tick calculations, and how long we should sleep for
-                long timeElapsed = System.currentTimeMillis() - lastTickTime;
-                if (timeElapsed > game.getSettings().getTickTime())
+                this.lastTickTime = System.currentTimeMillis() - lastTickTime;
+                if (this.lastTickTime > game.getSettings().getTickTime())
                     //spawn a warning in case we take too long to tick
-                    Logger.warn("Is the main thread lagging? Thread took " + timeElapsed + "ms to successfully tick.");
+                    Logger.warn("Is the main thread lagging? Thread took " + this.lastTickTime + "ms to successfully tick.");
                 else {
                     try {
                         //noinspection BusyWait
-                        Thread.sleep(game.getSettings().getTickTime() - timeElapsed);
+                        Thread.sleep(game.getSettings().getTickTime() - this.lastTickTime);
                     } catch (InterruptedException e) {
                         Logger.warn("Failed to sleep the main thread. Crashing with stacktrace");
                         Logger.warn(e.getMessage());
@@ -155,6 +163,16 @@ public class GameManagerImpl implements GameManager {
     @Override
     public CommandExecutor getCommandAPI() {
         return commandExecutor;
+    }
+
+    @Override
+    public EventsManager getEventsManager() {
+        return emerqldEventsManager;
+    }
+
+    @Override
+    public double getLastTickTime() {
+        return this.lastTickTime;
     }
 
 }

@@ -10,13 +10,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.emeraldcraft.engine:api:0.2")
-    runtimeOnly("org.emeraldcraft.engine:engine:0.2")
+    implementation("org.emeraldcraft.engine:api:0.3")
+    runtimeOnly("org.emeraldcraft.engine:engine:0.3")
 
     compileOnly("org.jetbrains:annotations:24.0.1")
 }
 application {
-    mainClass.set("org.emeraldcraft.examples.main")
+    mainClass.set("org.emeraldcraft.examples.Main")
 }
 idea {
     module {

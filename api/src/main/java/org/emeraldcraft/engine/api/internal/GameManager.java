@@ -1,6 +1,7 @@
 package org.emeraldcraft.engine.api.internal;
 
 import org.emeraldcraft.engine.api.commands.CommandExecutor;
+import org.emeraldcraft.engine.api.event.EventsManager;
 import org.emeraldcraft.engine.api.gameobjects.GameObject;
 import org.emeraldcraft.engine.api.scheduler.TaskScheduler;
 import org.emeraldcraft.engine.api.settings.GameSettings;
@@ -35,4 +36,8 @@ public interface GameManager {
     CommandExecutor getCommandAPI();
 
     InternalEmeraldLogger getLogger();
+
+    EventsManager getEventsManager();
+
+    double getLastTickTime();
 }
